@@ -16,8 +16,11 @@ IMAGES = [
 ]
 class App < Sinatra::Base
 
+	enable :session # to be able to access session functionality
+
 	before do
 		# this block executes AFTER every requests
+		@name = session[:name] # read value from session and set it to an instance var
 	end
 
 	after do
@@ -43,7 +46,7 @@ class App < Sinatra::Base
 	end
 
 	get '/' do
-		"Hello World"
+		session[:name] = "ArmNo" # set a value into session
 	end
 
 	post '/' do
