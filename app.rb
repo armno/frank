@@ -16,11 +16,13 @@ IMAGES = [
 ]
 class App < Sinatra::Base
 
-	enable :session # to be able to access session functionality
+	enable :session, :logging # to be able to access session functionality
 
 	before do
 		# this block executes AFTER every requests
 		@name = session[:name] # read value from session and set it to an instance var
+
+		logger.info "This is an info message"
 	end
 
 	after do
