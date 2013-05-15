@@ -22,6 +22,7 @@ class App < Sinatra::Base
 		# this block executes AFTER every requests
 		@name = session[:name] # read value from session and set it to an instance var
 
+		logger = Log4r::Logger["app"]
 		logger.info "This is an info message"
 	end
 
