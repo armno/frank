@@ -17,6 +17,7 @@ IMAGES = [
 class App < Sinatra::Base
 
 	enable :session, :logging # to be able to access session functionality
+	disable :show_exeptions
 
 	configure do
 		set :envirionment, ENV["RACK_ENV"]
@@ -33,6 +34,28 @@ class App < Sinatra::Base
 
 	configure :production do
 
+	end
+
+	not_found do
+		# called when 404 is raised
+		haml :"404", layout: true
+	end
+	 
+	error do
+		haml :error, layout: true, layout_engine: :erb
+	end
+
+	get "/500" do
+		raise StandardError, "Intentional fucking up"
+	end
+	
+	error 403 do
+		# what to be done only if 403 raised
+		"Forbidden. Go home!"
+	end
+
+	get "/403" do
+		halt 403
 	end
 
 	before do
