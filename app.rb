@@ -16,6 +16,22 @@ IMAGES = [
 ]
 class App < Sinatra::Base
 
+	before do
+		# this block executes AFTER every requests
+	end
+
+	after do
+		# this block executes AFTER every requests
+	end
+
+	before "/images" do
+		# this block executes before only "/images" request
+	end
+
+	before /test/ do
+		# can also be regex
+	end
+
 	get "/images" do
 		@images = IMAGES
 		erb :images
