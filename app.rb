@@ -18,6 +18,23 @@ class App < Sinatra::Base
 
 	enable :session, :logging # to be able to access session functionality
 
+	configure do
+		set :envirionment, ENV["RACK_ENV"]
+		:logging
+		# enable :logging
+		# disable :logging
+		# set :public_folder, "assets"
+		enable :raise_errors
+	end
+
+	configure :development do
+
+	end
+
+	configure :production do
+
+	end
+
 	before do
 		# this block executes AFTER every requests
 		@name = session[:name] # read value from session and set it to an instance var
