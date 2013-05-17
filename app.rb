@@ -18,6 +18,7 @@ class App < Sinatra::Base
 
 	enable :session, :logging # to be able to access session functionality
 	disable :show_exeptions
+	register Sinatra::Namespace
 
 	configure do
 		set :envirionment, ENV["RACK_ENV"]
@@ -106,5 +107,12 @@ class App < Sinatra::Base
 
 	get '/hello/:name/?:last_name?' do |name, last|
 		"Hello #{name} #{last}"
+	end
+
+	namespace "/images" do
+		get do
+			@images = Image.all
+			haml :"/images/index", layout_engine: :erb
+		end
 	end
 end

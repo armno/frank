@@ -1,5 +1,6 @@
 require "log4r"
 require "./app"
+require "./db"
 
 logger = Log4r::Logger.new "app"
 #logger.outputters << Log4r::Outputter.stdout
