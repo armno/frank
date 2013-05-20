@@ -28,6 +28,23 @@ class App < Sinatra::Base
 		# set :public_folder, "assets"
 		enable :raise_errors
 	end
+	
+	helpers Sinatra::ContentFor
+	helpers Sinatra::JSON
+
+	helpers do
+		def protected
+			unless authorized?
+				response["WWW-Authenticate"] = %(Basic realm="Admins Only!")
+				halt 401
+			end
+		end
+
+		def authorized?
+			@auth ||= Rack::Auth::Basic::Request.new(request.env)
+			@auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ["admin", 'admin']
+		end
+	end
 
 	configure :development do
 
